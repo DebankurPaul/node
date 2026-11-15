@@ -1,0 +1,37 @@
+name: Node.js CI
+
+on:
+  push:
+    branch:
+      -main
+      -development
+
+  pull_request:
+    branch:
+      -main
+
+jobs:
+  build:
+    runs-on: ubuntu latest
+
+    steps:
+      --name: Checkout Repository
+        uses: actions/checkout@v4
+
+      --name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      --name: Install Dependencies
+        uses: npm ci
+
+      --name: Fix Eslint permissions
+        uses: chmod +x node_modules/.bin/eslint
+
+      --name: Run Eslint
+        uses: npm run lint
+
+      --name: Run test
+        uses: npm test
